@@ -194,4 +194,29 @@ public class PetStoreClient {
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK);
     }
+
+    public void deletePet(Integer petId) {
+        await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                .ignoreExceptions()
+                .until(() -> given()
+                        .spec(request)
+                        .delete("/v2/pet/" + petId)
+                        .then()
+                        .assertThat()
+                        .extract(), p -> p.statusCode() == HttpStatus.SC_OK);
+    }
+
+    public PetResponse getPetByPetIdThenGetPetNotFound(Integer petId) {
+        return getGson().fromJson(
+                await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                        .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                        .ignoreExceptions()
+                        .until(() -> given()
+                                .spec(request)
+                                .get("/v2/pet/" + petId)
+                                .then()
+                                .assertThat()
+                                .extract(), p -> p.statusCode() == HttpStatus.SC_NOT_FOUND).response().getBody().asString(), PetResponse.class);
+    }
 }

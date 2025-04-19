@@ -164,4 +164,14 @@ public class PetStoreService {
                 })
                 .build());
     }
+
+    @Step
+    public void deletePet(Integer petId) {
+        petStoreClient.deletePet(petId);
+    }
+
+    @Step
+    public PetResponse getPetByPetIdThenGetPetNotFound(Integer petId) {
+        return petStoreClient.getPetByPetIdThenGetPetNotFound(petId);
+    }
 }

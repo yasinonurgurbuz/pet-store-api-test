@@ -18,3 +18,12 @@ Feature: Pet Tests
       | id  | name     | status      | photoUrls                    | categoryName | tagName    | newName    | newStatus     | newPhotoUrls                 | newCategoryName | newTagName  |
       | 103 | "Max"    | "available" | "https://example.com/max"    | "Dogs"       | "active"   | "Maximus"  | "pending"     | "https://example.com/maximus"| "Dogs"         | "loyal"     |
       | 104 | "Milo"   | "pending"   | "https://example.com/milo"   | "Cats"       | "playful"  | "Miles"    | "available"   | "https://example.com/miles"  | "Cats"         | "curious"   |
+
+  Scenario Outline: Create, delete and verify pet deletion
+    Given create pet with given information <id> <name> <status> <photoUrls> <categoryName> <tagName>
+    When delete pet with petId <id>
+    Then verify pet is deleted by trying to get <id>
+    Examples:
+      | id  | name     | status      | photoUrls                     | categoryName | tagName    |
+      | 105 | "Rex"    | "available" | "https://example.com/rex"     | "Dogs"       | "loyal"    |
+      | 106 | "Whiskers"| "pending"  | "https://example.com/whiskers"| "Cats"       | "playful"  |

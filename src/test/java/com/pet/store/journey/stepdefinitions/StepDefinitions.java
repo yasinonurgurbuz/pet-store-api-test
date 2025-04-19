@@ -127,4 +127,14 @@ public class StepDefinitions extends BaseTest {
         assertThat(petResponse.getName(), Matchers.equalTo(newName));
         assertThat(petResponse.getStatus(), Matchers.equalTo(newStatus));
     }
+
+    @When("delete pet with petId {int}")
+    public void delete_pet_with_pet_id(Integer petId) {
+        petStoreService.deletePet(petId);
+    }
+
+    @Then("verify pet is deleted by trying to get {int}")
+    public void verify_pet_is_deleted_by_trying_to_get(Integer petId) {
+        petResponse = petStoreService.getPetByPetIdThenGetPetNotFound(petId);
+    }
 }
