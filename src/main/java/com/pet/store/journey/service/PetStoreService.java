@@ -1,13 +1,15 @@
 package com.pet.store.journey.service;
 
 import com.pet.store.journey.clients.PetStoreClient;
-import com.pet.store.journey.models.request.CreateUserRequest;
-import com.pet.store.journey.models.request.UserRequest;
-import com.pet.store.journey.models.request.OrderRequest;
+import com.pet.store.journey.models.request.*;
 import com.pet.store.journey.models.response.LoginResponse;
 import com.pet.store.journey.models.response.OrderResponse;
+import com.pet.store.journey.models.response.PetResponse;
 import com.pet.store.journey.models.response.UserResponse;
 import io.qameta.allure.Step;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class PetStoreService {
     public final PetStoreClient petStoreClient;
@@ -116,5 +118,30 @@ public class PetStoreService {
     @Step
     public OrderResponse getOrderByOrderIdThenGetOrderNotFound(Long orderId) {
         return petStoreClient.getOrderByOrderIdThenGetOrderNotFound(orderId);
+    }
+
+    @Step
+    public void createPet(Integer id, String name, String status, String photoUrl, String categoryName, String tagName) {
+        petStoreClient.createPet(PetRequest.builder()
+                .id(id)
+                .name(name)
+                .status(status)
+                .photoUrls(Collections.singletonList(photoUrl))
+                .category(CategoryRequest.builder()
+                        .id(0L)
+                        .name(categoryName)
+                        .build())
+                .tags(new TagRequest[]{
+                        TagRequest.builder()
+                                .id(0L)
+                                .name(tagName)
+                                .build()
+                })
+                .build());
+    }
+
+    @Step
+    public PetResponse getPetByPetId(Integer petId) {
+        return petStoreClient.getPetByPetId(petId);
     }
 }

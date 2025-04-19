@@ -11,11 +11,6 @@ Feature:User Tests
       | 2  | "tulaygurbuz"     | "Tulay"      | "Gurbuz" | "tulaygurbuz@gmail.com"     | "5369119512"  | "248123"   | 2          |
       | 3  | "lolitagurbuz"    | "Lolita"     | "Gurbuz" | "lolitagurbuz@gmail.com"    | "5369119513"  | "248194"   | 3          |
 
-  Scenario: Create a new user with given array
-    Given create users with given array of user
-    When get one of user
-    Then check the results for given user
-
   Scenario Outline: Update information about user
     Given create user with given information <id> <username> <firstName> <lastName> <e-mail> <phone> <password> <userStatus>
     And login with <username> <password>
@@ -34,3 +29,9 @@ Feature:User Tests
       | id | username      | firstName  | lastName   | e-mail                  | phone         | password   | userStatus |
       | 1  | "testuser1"   | "Test"     | "User1"    | "testuser1@gmail.com"   | "5369119516"  | "248198"   | 1          |
       | 2  | "testuser2"   | "Test"     | "User2"    | "testuser2@gmail.com"   | "5369119517"  | "248199"   | 2          |
+
+  Scenario: Create a new user with given array
+    Given create users with given array of user
+    When get one of user
+    Then check the results for given user
+

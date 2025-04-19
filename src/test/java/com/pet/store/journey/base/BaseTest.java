@@ -1,5 +1,6 @@
 package com.pet.store.journey.base;
 
+import com.pet.store.journey.models.response.PetResponse;
 import com.pet.store.journey.models.response.UserResponse;
 import com.pet.store.journey.models.response.OrderResponse;
 import com.pet.store.journey.utils.Retry;
@@ -11,6 +12,7 @@ public class BaseTest extends ClientBaseTest {
 
     public UserResponse userResponse;
     public OrderResponse orderResponse;
+    public PetResponse petResponse;
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite(ITestContext context) {

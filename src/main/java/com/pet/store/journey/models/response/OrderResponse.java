@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class OrderResponse {
-    private Long id;
-    private Long petId;
-    private Integer quantity;
-    private String shipDate;
-    private String status;
-    private Boolean complete;
+    public Long id;
+    public Long petId;
+    public Integer quantity;
+    public String shipDate;
+    public String status;
+    public Boolean complete;
 } 

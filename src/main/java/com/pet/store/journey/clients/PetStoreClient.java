@@ -4,9 +4,11 @@ import com.pet.store.journey.enums.TimeConstants;
 import com.pet.store.journey.models.request.CreateUserRequest;
 import com.pet.store.journey.models.request.UserRequest;
 import com.pet.store.journey.models.request.OrderRequest;
+import com.pet.store.journey.models.request.PetRequest;
 import com.pet.store.journey.models.response.LoginResponse;
 import com.pet.store.journey.models.response.UserResponse;
 import com.pet.store.journey.models.response.OrderResponse;
+import com.pet.store.journey.models.response.PetResponse;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
@@ -156,5 +158,29 @@ public class PetStoreClient {
                                 .then()
                                 .assertThat()
                                 .extract(), p -> p.statusCode() == HttpStatus.SC_NOT_FOUND).response().getBody().asString(), OrderResponse.class);
+    }
+
+    public void createPet(PetRequest petRequest) {
+        given()
+                .spec(request)
+                .body(getGson().toJson(petRequest))
+                .when()
+                .post("/v2/pet")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK);
+    }
+
+    public PetResponse getPetByPetId(Integer petId) {
+        return getGson().fromJson(
+                await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                        .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                        .ignoreExceptions()
+                        .until(() -> given()
+                                .spec(request)
+                                .get("/v2/pet/" + petId)
+                                .then()
+                                .assertThat()
+                                .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), PetResponse.class);
     }
 }

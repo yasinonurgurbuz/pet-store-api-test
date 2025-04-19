@@ -9,12 +9,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.hamcrest.Matchers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@Component
 public class StepDefinitions extends BaseTest {
 
     @Given("create user with given information {long} {string} {string} {string} {string} {string} {string} {long}")
@@ -100,5 +97,22 @@ public class StepDefinitions extends BaseTest {
     @Then("verify order is deleted by trying to get {long}")
     public void verify_order_is_deleted_by_trying_to_get(Long orderId) {
         orderResponse = petStoreService.getOrderByOrderIdThenGetOrderNotFound(orderId);
+    }
+
+    @Given("create pet with given information {int} {string} {string} {string} {string} {string}")
+    public void create_pet_with_given_information(Integer id, String name, String status, String photoUrl, String categoryName, String tagName) {
+        petStoreService.createPet(id, name, status, photoUrl, categoryName, tagName);
+    }
+
+    @When("get pet by petId {int}")
+    public void get_pet_by_pet_id(Integer petId) {
+        petResponse = petStoreService.getPetByPetId(petId);
+    }
+
+    @Then("check the results for given {int} {string} {string}")
+    public void check_the_results_for_given(Integer id, String name, String status) {
+        assertThat(petResponse.getId(), Matchers.equalTo(id));
+        assertThat(petResponse.getName(), Matchers.equalTo(name));
+        assertThat(petResponse.getStatus(), Matchers.equalTo(status));
     }
 }
