@@ -115,4 +115,16 @@ public class StepDefinitions extends BaseTest {
         assertThat(petResponse.getName(), Matchers.equalTo(name));
         assertThat(petResponse.getStatus(), Matchers.equalTo(status));
     }
+
+    @When("update pet with new information {int} {string} {string} {string} {string} {string}")
+    public void update_pet_with_new_information(Integer id, String newName, String newStatus, String newPhotoUrls, String newCategoryName, String newTagName) {
+        petStoreService.updatePet(id, newName, newStatus, newPhotoUrls, newCategoryName, newTagName);
+    }
+
+    @Then("verify pet is updated with {int} {string} {string}")
+    public void verify_pet_is_updated_with(Integer id, String newName, String newStatus) {
+        petResponse = petStoreService.getPetByPetId(id);
+        assertThat(petResponse.getName(), Matchers.equalTo(newName));
+        assertThat(petResponse.getStatus(), Matchers.equalTo(newStatus));
+    }
 }

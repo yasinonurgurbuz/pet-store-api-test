@@ -183,4 +183,15 @@ public class PetStoreClient {
                                 .assertThat()
                                 .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), PetResponse.class);
     }
+
+    public void updatePet(PetRequest petRequest) {
+        given()
+                .spec(request)
+                .body(getGson().toJson(petRequest))
+                .when()
+                .put("/v2/pet")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK);
+    }
 }

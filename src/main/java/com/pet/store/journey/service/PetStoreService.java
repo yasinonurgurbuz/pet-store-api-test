@@ -144,4 +144,24 @@ public class PetStoreService {
     public PetResponse getPetByPetId(Integer petId) {
         return petStoreClient.getPetByPetId(petId);
     }
+
+    @Step
+    public void updatePet(Integer id, String name, String status, String photoUrl, String categoryName, String tagName) {
+        petStoreClient.updatePet(PetRequest.builder()
+                .id(id)
+                .name(name)
+                .status(status)
+                .photoUrls(Collections.singletonList(photoUrl))
+                .category(CategoryRequest.builder()
+                        .id(0L)
+                        .name(categoryName)
+                        .build())
+                .tags(new TagRequest[]{
+                        TagRequest.builder()
+                                .id(0L)
+                                .name(tagName)
+                                .build()
+                })
+                .build());
+    }
 }
