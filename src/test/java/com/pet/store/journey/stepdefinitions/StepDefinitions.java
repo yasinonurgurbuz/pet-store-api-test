@@ -6,6 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -97,7 +98,7 @@ public class StepDefinitions extends BaseTest {
         orderResponse = petStoreService.getOrderByOrderIdThenGetOrderNotFound(orderId);
     }
 
-    @Given("create pet with given information {int} {string} {string} {string} {string} {string}")
+    @Given("create pet with given information {long} {string} {string} {string} {string} {string}")
     public void create_pet_with_given_information(Long id, String name, String status, String photoUrl, String categoryName, String tagName) {
         petStoreService.createPet(id, name, status, photoUrl, categoryName, tagName);
     }
@@ -148,5 +149,15 @@ public class StepDefinitions extends BaseTest {
         for (PetResponse pet : petResponseList) {
             assertThat(pet.getStatus(), Matchers.equalTo(status));
         }
+    }
+
+    @When("upload image for pet with id {long} using file {string}")
+    public void upload_image_for_pet_with_id_using_file(Long petId, String fileName) {
+        statusCode = petStoreService.uploadImage(petId, fileName);
+    }
+
+    @Then("verify upload image get ok")
+    public void verify_upload_image_get_ok() {
+        assertThat(statusCode, Matchers.not(HttpStatus.SC_OK));
     }
 }

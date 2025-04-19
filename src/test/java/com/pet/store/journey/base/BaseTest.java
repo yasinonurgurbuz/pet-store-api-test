@@ -16,6 +16,7 @@ public class BaseTest extends ClientBaseTest {
     public OrderResponse orderResponse;
     public PetResponse petResponse;
     public List<PetResponse> petResponseList;
+    public Long statusCode;
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite(ITestContext context) {

@@ -179,4 +179,9 @@ public class PetStoreService {
     public List<PetResponse> findPetsByStatus(String status) {
         return petStoreClient.findPetsByStatus(status);
     }
+
+    @Step
+    public Long uploadImage(Long petId, String fileName) {
+        return petStoreClient.uploadImage(petId, fileName);
+    }
 }

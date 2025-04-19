@@ -9,12 +9,14 @@ import com.pet.store.journey.models.response.LoginResponse;
 import com.pet.store.journey.models.response.OrderResponse;
 import com.pet.store.journey.models.response.PetResponse;
 import com.pet.store.journey.models.response.UserResponse;
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.io.File;
 
 import static com.pet.store.journey.utils.GsonSerializer.getGson;
 import static com.pet.store.journey.utils.ReqSpecUtil.prepareReq;
@@ -233,5 +235,17 @@ public class PetStoreClient {
                                 .then()
                                 .assertThat()
                                 .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), PetResponse[].class));
+    }
+
+    public Long uploadImage(Long petId, String fileName) {
+        int statusCode = given()
+                .spec(request)
+                .contentType(ContentType.MULTIPART)
+                .multiPart("image1", new File("./src/main/resources/" + fileName))
+                .when()
+                .post("/v2/pet/" + petId + "/uploadImage")
+                .getStatusCode();
+
+        return (long) statusCode;
     }
 }

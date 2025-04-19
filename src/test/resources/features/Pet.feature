@@ -36,3 +36,12 @@ Feature: Pet Tests
       | "available" |
       | "pending"   |
       | "sold"      |
+
+  Scenario Outline: Upload pet image and verify changes
+    Given create pet with given information <id> <name> <status> <photoUrls> <categoryName> <tagName>
+    When upload image for pet with id <id> using file "yasin-hi.png"
+    Then verify upload image get ok
+    Examples:
+      | id  | name     | status      | photoUrls                    | categoryName | tagName    |
+      | 107 | "Buddy"  | "available" | "https://example.com/buddy"  | "Dogs"       | "friendly" |
+      | 108 | "Luna"   | "pending"   | "https://example.com/luna"   | "Cats"       | "playful"  |
