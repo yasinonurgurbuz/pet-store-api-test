@@ -107,4 +107,14 @@ public class PetStoreService {
     public OrderResponse getOrderByOrderId(Long orderId) {
         return petStoreClient.getOrderByOrderId(orderId);
     }
+
+    @Step
+    public void deleteOrder(Long orderId) {
+        petStoreClient.deleteOrder(orderId);
+    }
+
+    @Step
+    public OrderResponse getOrderByOrderIdThenGetOrderNotFound(Long orderId) {
+        return petStoreClient.getOrderByOrderIdThenGetOrderNotFound(orderId);
+    }
 }

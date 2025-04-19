@@ -91,4 +91,14 @@ public class StepDefinitions extends BaseTest {
     public void check_the_results_for_given(Long id) {
         assertThat(orderResponse.getId(), Matchers.equalTo(id));
     }
+
+    @When("delete order by orderId {long}")
+    public void delete_order_by_order_id(Long orderId) {
+        petStoreService.deleteOrder(orderId);
+    }
+
+    @Then("verify order is deleted by trying to get {long}")
+    public void verify_order_is_deleted_by_trying_to_get(Long orderId) {
+        orderResponse = petStoreService.getOrderByOrderIdThenGetOrderNotFound(orderId);
+    }
 }

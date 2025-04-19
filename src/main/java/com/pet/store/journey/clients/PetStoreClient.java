@@ -132,4 +132,29 @@ public class PetStoreClient {
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK);
     }
+
+    public void deleteOrder(Long orderId) {
+        await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                .ignoreExceptions()
+                .until(() -> given()
+                        .spec(request)
+                        .delete("/v2/store/order/" + orderId)
+                        .then()
+                        .assertThat()
+                        .extract(), p -> p.statusCode() == HttpStatus.SC_OK);
+    }
+
+    public OrderResponse getOrderByOrderIdThenGetOrderNotFound(Long orderId) {
+        return getGson().fromJson(
+                await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                        .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                        .ignoreExceptions()
+                        .until(() -> given()
+                                .spec(request)
+                                .get("/v2/store/order/" + orderId)
+                                .then()
+                                .assertThat()
+                                .extract(), p -> p.statusCode() == HttpStatus.SC_NOT_FOUND).response().getBody().asString(), OrderResponse.class);
+    }
 }
