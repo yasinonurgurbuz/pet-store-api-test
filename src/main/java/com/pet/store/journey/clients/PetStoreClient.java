@@ -1,0 +1,44 @@
+package com.pet.store.journey.clients;
+
+import com.pet.store.journey.enums.TimeConstants;
+import com.pet.store.journey.models.request.CreateUserRequest;
+import com.pet.store.journey.models.response.UserResponse;
+import io.restassured.specification.RequestSpecification;
+import org.apache.http.HttpStatus;
+
+import java.time.Duration;
+
+import static com.pet.store.journey.utils.GsonSerializer.getGson;
+import static io.restassured.RestAssured.given;
+import static com.pet.store.journey.utils.ReqSpecUtil.prepareReq;
+import static org.awaitility.Awaitility.await;
+
+public class PetStoreClient {
+
+    private final RequestSpecification request;
+
+    public PetStoreClient() {
+        this.request = prepareReq("PET_STORE_API_URL");
+    }
+
+    public void createUser(CreateUserRequest createUserRequest) {
+        given()
+                .spec(request)
+                .body(getGson().toJson(createUserRequest))
+                .when()
+                .post("/v2/user")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK);
+    }
+
+    public UserResponse getUserByUserName(String username) {
+        return getGson().fromJson(
+                await().atMost(Duration.ofSeconds(TimeConstants.DURATION)).pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL)).until(() -> given()
+                        .spec(request)
+                        .get("/v2/user/" + username)
+                        .then()
+                        .assertThat()
+                        .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), UserResponse.class);
+    }
+}
