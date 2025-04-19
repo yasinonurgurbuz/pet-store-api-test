@@ -10,3 +10,8 @@ Feature:Fulfillment Tests
       | 1  | "yasinonurgurbuz" | "Yasin Onur" | "Gurbuz" | "yasinonurgurbuz@gmail.com" | "5369119511"  | "248191"   | 1          |
       | 2  | "tulaygurbuz"     | "Tulay"      | "Gurbuz" | "tulaygurbuz@gmail.com"     | "5369119512"  | "248123"   | 2          |
       | 3  | "lolitagurbuz"    | "Lolita"     | "Gurbuz" | "lolitagurbuz@gmail.com"    | "5369119513"  | "248194"   | 3          |
+
+  Scenario: Create a new user with given array
+    Given create users with given array of user
+    When get one of user
+    Then check the results for given user

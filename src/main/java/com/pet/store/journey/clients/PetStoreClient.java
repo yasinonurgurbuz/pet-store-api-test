@@ -2,6 +2,7 @@ package com.pet.store.journey.clients;
 
 import com.pet.store.journey.enums.TimeConstants;
 import com.pet.store.journey.models.request.CreateUserRequest;
+import com.pet.store.journey.models.request.UserRequest;
 import com.pet.store.journey.models.response.UserResponse;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
@@ -27,6 +28,17 @@ public class PetStoreClient {
                 .body(getGson().toJson(createUserRequest))
                 .when()
                 .post("/v2/user")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK);
+    }
+
+    public void createWithGivenArrayOfUsers(UserRequest[] users) {
+        given()
+                .spec(request)
+                .body(users)
+                .when()
+                .post("/v2/user/createWithArray")
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_OK);
