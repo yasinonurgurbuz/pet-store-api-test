@@ -1,15 +1,20 @@
 package com.pet.store.journey.stepdefinitions;
 
 import com.pet.store.journey.base.BaseTest;
+import com.pet.store.journey.models.response.OrderResponse;
+import com.pet.store.journey.service.PetStoreService;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.hamcrest.Matchers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
+@Component
 public class StepDefinitions extends BaseTest {
 
     @Given("create user with given information {long} {string} {string} {string} {string} {string} {string} {long}")
@@ -70,5 +75,20 @@ public class StepDefinitions extends BaseTest {
     @Then("verify user is deleted by trying to get {string}")
     public void verify_user_is_deleted_by_trying_to_get(String username) {
         userResponse = petStoreService.getUserByUserNameThenGetUserNotFound(username);
+    }
+
+    @Given("create store order with given information {long} {long} {long} {string} {string} {string}")
+    public void create_store_order_with_given_information(Long orderId, Long petId, Long quantity, String shipDate, String status, String complete) {
+        petStoreService.createStoreOrder(orderId, petId, quantity, shipDate, status, Boolean.parseBoolean(complete));
+    }
+
+    @When("get order by orderId {long}")
+    public void get_order_by_order_id(Long orderId) {
+        orderResponse = petStoreService.getOrderByOrderId(orderId);
+    }
+
+    @Then("check the results for given {long}")
+    public void check_the_results_for_given(Long id) {
+        assertThat(orderResponse.getId(), Matchers.equalTo(id));
     }
 }

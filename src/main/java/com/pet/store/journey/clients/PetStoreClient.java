@@ -3,8 +3,10 @@ package com.pet.store.journey.clients;
 import com.pet.store.journey.enums.TimeConstants;
 import com.pet.store.journey.models.request.CreateUserRequest;
 import com.pet.store.journey.models.request.UserRequest;
+import com.pet.store.journey.models.request.OrderRequest;
 import com.pet.store.journey.models.response.LoginResponse;
 import com.pet.store.journey.models.response.UserResponse;
+import com.pet.store.journey.models.response.OrderResponse;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
@@ -105,5 +107,29 @@ public class PetStoreClient {
                         .then()
                         .assertThat()
                         .extract(), p -> p.statusCode() == HttpStatus.SC_OK);
+    }
+
+    public OrderResponse getOrderByOrderId(Long orderId) {
+        return getGson().fromJson(
+                await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                        .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                        .ignoreExceptions()
+                        .until(() -> given()
+                                .spec(request)
+                                .get("/v2/store/order/" + orderId)
+                                .then()
+                                .assertThat()
+                                .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), OrderResponse.class);
+    }
+
+    public void createStoreOrder(OrderRequest orderRequest) {
+        given()
+                .spec(request)
+                .body(getGson().toJson(orderRequest))
+                .when()
+                .post("/v2/store/order")
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.SC_OK);
     }
 }

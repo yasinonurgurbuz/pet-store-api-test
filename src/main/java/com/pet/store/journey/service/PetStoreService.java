@@ -3,7 +3,9 @@ package com.pet.store.journey.service;
 import com.pet.store.journey.clients.PetStoreClient;
 import com.pet.store.journey.models.request.CreateUserRequest;
 import com.pet.store.journey.models.request.UserRequest;
+import com.pet.store.journey.models.request.OrderRequest;
 import com.pet.store.journey.models.response.LoginResponse;
+import com.pet.store.journey.models.response.OrderResponse;
 import com.pet.store.journey.models.response.UserResponse;
 import io.qameta.allure.Step;
 
@@ -87,5 +89,22 @@ public class PetStoreService {
     @Step
     public void deleteUser(String username) {
         petStoreClient.deleteUser(username);
+    }
+
+    @Step
+    public void createStoreOrder(Long id, Long petId, Long quantity, String shipDate, String status, Boolean complete) {
+        petStoreClient.createStoreOrder(OrderRequest.builder()
+                .id(id)
+                .petId(petId)
+                .quantity(quantity.intValue())
+                .shipDate(shipDate)
+                .status(status)
+                .complete(complete)
+                .build());
+    }
+
+    @Step
+    public OrderResponse getOrderByOrderId(Long orderId) {
+        return petStoreClient.getOrderByOrderId(orderId);
     }
 }

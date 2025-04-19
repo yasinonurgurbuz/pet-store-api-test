@@ -1,5 +1,5 @@
-Feature:Fulfillment Tests
-  Tests for pet store api
+Feature:User Tests
+  Tests for pet store api about user
 
   Scenario Outline: Create a new user
     Given create user with given information <id> <username> <firstName> <lastName> <e-mail> <phone> <password> <userStatus>
