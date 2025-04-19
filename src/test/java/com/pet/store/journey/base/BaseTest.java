@@ -1,8 +1,8 @@
 package com.pet.store.journey.base;
 
+import com.pet.store.journey.models.response.OrderResponse;
 import com.pet.store.journey.models.response.PetResponse;
 import com.pet.store.journey.models.response.UserResponse;
-import com.pet.store.journey.models.response.OrderResponse;
 import com.pet.store.journey.utils.Retry;
 import org.testng.ITestContext;
 import org.testng.ITestNGMethod;

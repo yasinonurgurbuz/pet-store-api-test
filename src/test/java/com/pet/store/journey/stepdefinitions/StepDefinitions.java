@@ -2,7 +2,6 @@ package com.pet.store.journey.stepdefinitions;
 
 import com.pet.store.journey.base.BaseTest;
 import com.pet.store.journey.models.response.PetResponse;
-
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

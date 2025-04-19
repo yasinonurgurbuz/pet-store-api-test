@@ -8,7 +8,6 @@ import com.pet.store.journey.models.response.PetResponse;
 import com.pet.store.journey.models.response.UserResponse;
 import io.qameta.allure.Step;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

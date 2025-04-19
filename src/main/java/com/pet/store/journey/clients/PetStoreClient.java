@@ -2,13 +2,13 @@ package com.pet.store.journey.clients;
 
 import com.pet.store.journey.enums.TimeConstants;
 import com.pet.store.journey.models.request.CreateUserRequest;
-import com.pet.store.journey.models.request.UserRequest;
 import com.pet.store.journey.models.request.OrderRequest;
 import com.pet.store.journey.models.request.PetRequest;
+import com.pet.store.journey.models.request.UserRequest;
 import com.pet.store.journey.models.response.LoginResponse;
-import com.pet.store.journey.models.response.UserResponse;
 import com.pet.store.journey.models.response.OrderResponse;
 import com.pet.store.journey.models.response.PetResponse;
+import com.pet.store.journey.models.response.UserResponse;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
@@ -17,8 +17,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.pet.store.journey.utils.GsonSerializer.getGson;
-import static io.restassured.RestAssured.given;
 import static com.pet.store.journey.utils.ReqSpecUtil.prepareReq;
+import static io.restassured.RestAssured.given;
 import static org.awaitility.Awaitility.await;
 
 public class PetStoreClient {
