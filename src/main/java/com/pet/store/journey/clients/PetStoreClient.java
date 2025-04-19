@@ -13,10 +13,10 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
-import java.io.File;
 
 import static com.pet.store.journey.utils.GsonSerializer.getGson;
 import static com.pet.store.journey.utils.ReqSpecUtil.prepareReq;

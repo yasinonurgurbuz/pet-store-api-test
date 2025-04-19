@@ -70,4 +70,4 @@ The reports will be available in the `target/site/allure-maven-plugin` directory
 
 Thanks
 
-![yasin-hi.png](../../../Downloads/yasin-hi.png)
+![Thanks](./src/main/resources/yasin-hi.png)
