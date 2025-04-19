@@ -27,3 +27,12 @@ Feature: Pet Tests
       | id  | name     | status      | photoUrls                     | categoryName | tagName    |
       | 105 | "Rex"    | "available" | "https://example.com/rex"     | "Dogs"       | "loyal"    |
       | 106 | "Whiskers"| "pending"  | "https://example.com/whiskers"| "Cats"       | "playful"  |
+
+  Scenario Outline: Find pets by status and verify results
+    When find pets by status <status>
+    Then verify pets have correct status <status>
+    Examples:
+      | status      |
+      | "available" |
+      | "pending"   |
+      | "sold"      |

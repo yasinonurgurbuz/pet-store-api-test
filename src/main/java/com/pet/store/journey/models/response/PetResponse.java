@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class PetResponse {
-    public Integer id;
+    public Long id;
     public CategoryRequest category;
     public String name;
     public String[] photoUrls;

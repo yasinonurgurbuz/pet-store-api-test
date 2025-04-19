@@ -13,6 +13,8 @@ import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.pet.store.journey.utils.GsonSerializer.getGson;
 import static io.restassured.RestAssured.given;
@@ -218,5 +220,18 @@ public class PetStoreClient {
                                 .then()
                                 .assertThat()
                                 .extract(), p -> p.statusCode() == HttpStatus.SC_NOT_FOUND).response().getBody().asString(), PetResponse.class);
+    }
+
+    public List<PetResponse> findPetsByStatus(String status) {
+        return Arrays.asList(getGson().fromJson(
+                await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                        .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                        .ignoreExceptions()
+                        .until(() -> given()
+                                .spec(request)
+                                .get("/v2/pet/findByStatus?status=" + status)
+                                .then()
+                                .assertThat()
+                                .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), PetResponse[].class));
     }
 }

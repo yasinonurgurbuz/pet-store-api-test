@@ -8,11 +8,14 @@ import org.testng.ITestContext;
 import org.testng.ITestNGMethod;
 import org.testng.annotations.BeforeSuite;
 
+import java.util.List;
+
 public class BaseTest extends ClientBaseTest {
 
     public UserResponse userResponse;
     public OrderResponse orderResponse;
     public PetResponse petResponse;
+    public List<PetResponse> petResponseList;
 
     @BeforeSuite(alwaysRun = true)
     public void beforeSuite(ITestContext context) {

@@ -10,6 +10,7 @@ import io.qameta.allure.Step;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class PetStoreService {
     public final PetStoreClient petStoreClient;
@@ -121,7 +122,7 @@ public class PetStoreService {
     }
 
     @Step
-    public void createPet(Integer id, String name, String status, String photoUrl, String categoryName, String tagName) {
+    public void createPet(Long id, String name, String status, String photoUrl, String categoryName, String tagName) {
         petStoreClient.createPet(PetRequest.builder()
                 .id(id)
                 .name(name)
@@ -146,7 +147,7 @@ public class PetStoreService {
     }
 
     @Step
-    public void updatePet(Integer id, String name, String status, String photoUrl, String categoryName, String tagName) {
+    public void updatePet(Long id, String name, String status, String photoUrl, String categoryName, String tagName) {
         petStoreClient.updatePet(PetRequest.builder()
                 .id(id)
                 .name(name)
@@ -173,5 +174,10 @@ public class PetStoreService {
     @Step
     public PetResponse getPetByPetIdThenGetPetNotFound(Integer petId) {
         return petStoreClient.getPetByPetIdThenGetPetNotFound(petId);
+    }
+
+    @Step
+    public List<PetResponse> findPetsByStatus(String status) {
+        return petStoreClient.findPetsByStatus(status);
     }
 }

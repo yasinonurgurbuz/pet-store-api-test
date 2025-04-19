@@ -1,8 +1,7 @@
 package com.pet.store.journey.stepdefinitions;
 
 import com.pet.store.journey.base.BaseTest;
-import com.pet.store.journey.models.response.OrderResponse;
-import com.pet.store.journey.service.PetStoreService;
+import com.pet.store.journey.models.response.PetResponse;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -100,7 +99,7 @@ public class StepDefinitions extends BaseTest {
     }
 
     @Given("create pet with given information {int} {string} {string} {string} {string} {string}")
-    public void create_pet_with_given_information(Integer id, String name, String status, String photoUrl, String categoryName, String tagName) {
+    public void create_pet_with_given_information(Long id, String name, String status, String photoUrl, String categoryName, String tagName) {
         petStoreService.createPet(id, name, status, photoUrl, categoryName, tagName);
     }
 
@@ -117,7 +116,7 @@ public class StepDefinitions extends BaseTest {
     }
 
     @When("update pet with new information {int} {string} {string} {string} {string} {string}")
-    public void update_pet_with_new_information(Integer id, String newName, String newStatus, String newPhotoUrls, String newCategoryName, String newTagName) {
+    public void update_pet_with_new_information(Long id, String newName, String newStatus, String newPhotoUrls, String newCategoryName, String newTagName) {
         petStoreService.updatePet(id, newName, newStatus, newPhotoUrls, newCategoryName, newTagName);
     }
 
@@ -136,5 +135,19 @@ public class StepDefinitions extends BaseTest {
     @Then("verify pet is deleted by trying to get {int}")
     public void verify_pet_is_deleted_by_trying_to_get(Integer petId) {
         petResponse = petStoreService.getPetByPetIdThenGetPetNotFound(petId);
+    }
+
+    @When("find pets by status {string}")
+    public void find_pets_by_status(String status) {
+        petResponseList = petStoreService.findPetsByStatus(status);
+    }
+
+    @Then("verify pets have correct status {string}")
+    public void verify_pets_have_correct_status(String status) {
+        assertThat(petResponseList, Matchers.notNullValue());
+        assertThat(petResponseList.size(), Matchers.greaterThan(0));
+        for (PetResponse pet : petResponseList) {
+            assertThat(pet.getStatus(), Matchers.equalTo(status));
+        }
     }
 }
