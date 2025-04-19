@@ -61,6 +61,11 @@ public class PetStoreService {
     }
 
     @Step
+    public UserResponse getUserByUserNameThenGetUserNotFound(String username) {
+        return petStoreClient.getUserByUserNameThenGetUserNotFound(username);
+    }
+
+    @Step
     public LoginResponse getUserLogin(String username, String password) {
         return petStoreClient.getUserLogin(username, password);
     }
@@ -77,5 +82,10 @@ public class PetStoreService {
                 .password(password)
                 .userStatus(userStatus)
                 .build(), username);
+    }
+
+    @Step
+    public void deleteUser(String username) {
+        petStoreClient.deleteUser(username);
     }
 }

@@ -61,4 +61,14 @@ public class StepDefinitions extends BaseTest {
         userResponse = petStoreService.getUserByUserName(username);
         assertThat(userResponse.getFirstName(), Matchers.equalTo(secondFirstName));
     }
+
+    @When("delete user with {string}")
+    public void delete_user_with(String username) {
+        petStoreService.deleteUser(username);
+    }
+
+    @Then("verify user is deleted by trying to get {string}")
+    public void verify_user_is_deleted_by_trying_to_get(String username) {
+        userResponse = petStoreService.getUserByUserNameThenGetUserNotFound(username);
+    }
 }

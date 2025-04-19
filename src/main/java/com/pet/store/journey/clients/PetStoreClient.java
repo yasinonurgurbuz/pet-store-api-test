@@ -69,6 +69,19 @@ public class PetStoreClient {
                                 .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), UserResponse.class);
     }
 
+    public UserResponse getUserByUserNameThenGetUserNotFound(String username) {
+        return getGson().fromJson(
+                await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                        .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                        .ignoreExceptions()
+                        .until(() -> given()
+                                .spec(request)
+                                .get("/v2/user/" + username)
+                                .then()
+                                .assertThat()
+                                .extract(), p -> p.statusCode() == HttpStatus.SC_NOT_FOUND).response().getBody().asString(), UserResponse.class);
+    }
+
     public LoginResponse getUserLogin(String username, String password) {
         return getGson().fromJson(
                 await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
@@ -80,5 +93,17 @@ public class PetStoreClient {
                                 .then()
                                 .assertThat()
                                 .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), LoginResponse.class);
+    }
+
+    public void deleteUser(String username) {
+        await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                .ignoreExceptions()
+                .until(() -> given()
+                        .spec(request)
+                        .delete("/v2/user/" + username)
+                        .then()
+                        .assertThat()
+                        .extract(), p -> p.statusCode() == HttpStatus.SC_OK);
     }
 }

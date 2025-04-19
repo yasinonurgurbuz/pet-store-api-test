@@ -25,3 +25,12 @@ Feature:Fulfillment Tests
       | id | username      | firstName  | lastName   | e-mail                  | phone         | password   | userStatus | secondFirstName |
       | 1  | "fatihyildiz" | "Fatih"    | "Yildiz"   | "fatihyildiz@gmail.com" | "5369119514"  | "248196"   | 1          |  "Tolga"        |
       | 2  | "gulyildirim" | "Gul"      | "Yildirim" | "gulyildirim@gmail.com" | "5369119515"  | "248127"   | 2          |  "Selma"        |
+
+  Scenario Outline: Delete user
+    Given create user with given information <id> <username> <firstName> <lastName> <e-mail> <phone> <password> <userStatus>
+    When delete user with <username>
+    Then verify user is deleted by trying to get <username>
+    Examples:
+      | id | username      | firstName  | lastName   | e-mail                  | phone         | password   | userStatus |
+      | 1  | "testuser1"   | "Test"     | "User1"    | "testuser1@gmail.com"   | "5369119516"  | "248198"   | 1          |
+      | 2  | "testuser2"   | "Test"     | "User2"    | "testuser2@gmail.com"   | "5369119517"  | "248199"   | 2          |
