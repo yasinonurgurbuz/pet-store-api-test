@@ -2,6 +2,7 @@ package com.pet.store.journey.stepdefinitions;
 
 import com.pet.store.journey.base.BaseTest;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -21,6 +22,11 @@ public class StepDefinitions extends BaseTest {
         petStoreService.createWithGivenArrayOfUsers();
     }
 
+    @And("login with {string} {string}")
+    public void login_with_user_name(String username, String password) {
+        petStoreService.getUserLogin(username, password);
+    }
+
     @When("get user by {string}")
     public void get_user_by_user_name(String username) {
         userResponse = petStoreService.getUserByUserName(username);
@@ -29,6 +35,11 @@ public class StepDefinitions extends BaseTest {
     @When("get one of user")
     public void get_one_of_user() {
         userResponse = petStoreService.getUserByUserName("UserName1");
+    }
+
+    @When("update user information with the {long} {string} {string} {string} {string} {string} {string} {long}")
+    public void update_user_information_with_the_second_first_name(Long id, String username, String secondFirstName, String lastName, String eMail,String phone, String password, Long userStatus) {
+        petStoreService.updateUserName(id, username, secondFirstName, lastName, eMail, phone, password, userStatus);
     }
 
     @Then("check the results for given {string} {string} {string}")
@@ -43,5 +54,11 @@ public class StepDefinitions extends BaseTest {
         assertThat(userResponse.getFirstName(), Matchers.equalTo("UserFirstName1"));
         assertThat(userResponse.getLastName(), Matchers.equalTo("UserLastName1"));
         assertThat(userResponse.getEmail(), Matchers.equalTo("user1@example.com"));
+    }
+
+    @Then("check the results for given {string} {string}")
+    public void check_the_results_for_given_second_first_name(String username, String secondFirstName) {
+        userResponse = petStoreService.getUserByUserName(username);
+        assertThat(userResponse.getFirstName(), Matchers.equalTo(secondFirstName));
     }
 }

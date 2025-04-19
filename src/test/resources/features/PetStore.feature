@@ -15,3 +15,13 @@ Feature:Fulfillment Tests
     Given create users with given array of user
     When get one of user
     Then check the results for given user
+
+  Scenario Outline: Update information about user
+    Given create user with given information <id> <username> <firstName> <lastName> <e-mail> <phone> <password> <userStatus>
+    And login with <username> <password>
+    When update user information with the <id> <username> <secondFirstName> <lastName> <e-mail> <phone> <password> <userStatus>
+    Then check the results for given <username> <secondFirstName>
+    Examples:
+      | id | username      | firstName  | lastName   | e-mail                  | phone         | password   | userStatus | secondFirstName |
+      | 1  | "fatihyildiz" | "Fatih"    | "Yildiz"   | "fatihyildiz@gmail.com" | "5369119514"  | "248196"   | 1          |  "Tolga"        |
+      | 2  | "gulyildirim" | "Gul"      | "Yildirim" | "gulyildirim@gmail.com" | "5369119515"  | "248127"   | 2          |  "Selma"        |

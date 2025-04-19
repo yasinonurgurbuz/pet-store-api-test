@@ -3,6 +3,7 @@ package com.pet.store.journey.service;
 import com.pet.store.journey.clients.PetStoreClient;
 import com.pet.store.journey.models.request.CreateUserRequest;
 import com.pet.store.journey.models.request.UserRequest;
+import com.pet.store.journey.models.response.LoginResponse;
 import com.pet.store.journey.models.response.UserResponse;
 import io.qameta.allure.Step;
 
@@ -57,5 +58,24 @@ public class PetStoreService {
     @Step
     public UserResponse getUserByUserName(String username) {
         return petStoreClient.getUserByUserName(username);
+    }
+
+    @Step
+    public LoginResponse getUserLogin(String username, String password) {
+        return petStoreClient.getUserLogin(username, password);
+    }
+
+    @Step
+    public void updateUserName(Long id, String username, String secondFirstName, String lastName, String eMail, String phone, String password, Long userStatus) {
+         petStoreClient.updateUserName(CreateUserRequest.builder()
+                .id(id)
+                .username(username)
+                .firstName(secondFirstName)
+                .lastName(lastName)
+                .email(eMail)
+                .phone(phone)
+                .password(password)
+                .userStatus(userStatus)
+                .build(), username);
     }
 }
