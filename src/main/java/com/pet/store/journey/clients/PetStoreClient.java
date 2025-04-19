@@ -34,11 +34,14 @@ public class PetStoreClient {
 
     public UserResponse getUserByUserName(String username) {
         return getGson().fromJson(
-                await().atMost(Duration.ofSeconds(TimeConstants.DURATION)).pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL)).until(() -> given()
-                        .spec(request)
-                        .get("/v2/user/" + username)
-                        .then()
-                        .assertThat()
-                        .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), UserResponse.class);
+                await().atMost(Duration.ofSeconds(TimeConstants.DURATION))
+                        .pollInterval(Duration.ofSeconds(TimeConstants.POLLINTERVAL))
+                        .ignoreExceptions()
+                        .until(() -> given()
+                                .spec(request)
+                                .get("/v2/user/" + username)
+                                .then()
+                                .assertThat()
+                                .extract(), p -> p.statusCode() == HttpStatus.SC_OK).response().getBody().asString(), UserResponse.class);
     }
 }
